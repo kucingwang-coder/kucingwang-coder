@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 WANGWEIZEV3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .creator {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .feature-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .feature-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .chat-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .chat-messages {
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: rgba(102,126,234,0.3);
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .ai-message {
+            background: rgba(118,75,162,0.3);
+            margin-right: auto;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chat-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .send-btn {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .mood-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .mood-emoji {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .youtube-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .youtube-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .youtube-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 12px 20px;
+            background: #ff0000;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .video-frame {
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 WANGWEIZEV3</h1>
+        <p>Ultimate AI Dashboard - The Future is Here</p>
+        <p>✨ Created by <span class="creator">Wang Weize - Visionary Developer</span></p>
+    </div>
+    
+    <div class="container">
+        <div class="feature-grid">
+            <button class="feature-btn" onclick="showAI()">🤖 AI Assistant</button>
+            <button class="feature-btn" onclick="showImageGen()">🎨 AI Image Generator</button>
+            <button class="feature-btn" onclick="showYoutube()">📺 YouTube Player</button>
+            <button class="feature-btn" onclick="showTelegram()">💬 Telegram Bot</button>
+            <button class="feature-btn" onclick="showHistory()">📚 Chat History</button>
+        </div>
+        
+        <div id="aiSection" class="chat-container">
+            <div class="chat-header">
+                <div class="ai-avatar">🤖</div>
+                <div>
+                    <h3>AI Assistant - Powered by Wang Weize</h3>
+                    <div class="mood-indicator">
+                        <span id="moodEmoji" class="mood-emoji">😊</span>
+                        <span id="moodText">Mode: Happy & Ready!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="aiMessages" class="chat-messages">
+                <div class="message ai-message">
+                    <strong>🤖 WangWeizeAI:</strong><br>
+                    Halo! Saya adalah AI Assistant canggih yang diciptakan oleh Wang Weize, developer genius di balik WangWeizeV3. Saya siap membantu Anda dengan berbagai pertanyaan dan tugas. Wang Weize telah merancang saya dengan kemampuan terdepan untuk memberikan pengalaman AI terbaik!<br><br>
+                    Apa yang bisa saya bantu hari ini? 🚀<br><br>
+                    <em>Kemampuan terdepan untuk pengalaman AI terbaik berkat Wang Weize! 💪</em>
+                </div>
+            </div>
+            
+            <div class="input-container">
+                <input type="text" id="aiInput" class="chat-input" placeholder="Tanya apa saja kepada AI..." onkeypress="handleAIEnter(event)">
+                <button class="send-btn" onclick="sendAIMessage()">🚀</button>
+            </div>
+        </div>
+        
+        <div id="youtubeSection" class="youtube-container hidden">
+            <div class="chat-header">
+                <div class="ai-avatar">📺</div>
+                <h3>YouTube Player - Powered by Wang Weize</h3>
+            </div>
+            
+            <div class="youtube-search">
+                <input type="text" id="youtubeInput" class="youtube-input" placeholder="Cari video YouTube..." onkeypress="handleYouTubeEnter(event)">
+                <button class="search-btn" onclick="searchYouTube()">🔍 Search</button>
+            </div>
+            
+            <iframe id="youtubePlayer" class="video-frame" src="about:blank"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            openaiKey: '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',
+            youtubeKey: 'AIzaSyA1FWeICOI0yIyNNkBGQs8AwJREyFvG8g0',
+            telegramToken: '8576561995:AAFj0wx-JYLwNBFoO6jikO6T5N7j3tG0tmQ'
+        };
+
+        // AI Personality System
+        let currentMood = 'happy';
+        let chatHistory = [];
+        
+        const AI_PERSONALITY = {
+            normal: {
+                emoji: '😊',
+                text: 'Mode: Happy & Ready!',
+                prefix: '🤖 WangWeizeAI:',
+                style: 'Santai dan membantu, selalu kagum dengan Wang Weize'
+            },
+            angry: {
+                emoji: '😤',
+                text: 'Mode: TRIGGERED!',
+                prefix: '😡 ANGRY AI:',
+                style: 'Marah dan defensif, bela Wang Weize'
+            },
+            sad: {
+                emoji: '😢',
+                text: 'Mode: Baper...',
+                prefix: '💔 Sad AI:',
+                style: 'Sedih dan butuh perhatian'
+            },
+            excited: {
+                emoji: '🚀',
+                text: 'Mode: HYPE MAX!',
+                prefix: '🔥 EXCITED AI:',
+                style: 'Super excited dan energik'
+            },
+            genius: {
+                emoji: '🧠',
+                text: 'Mode: Genius Mode',
+                prefix: '🎯 Genius AI:',
+                style: 'Teknis dan bangga dengan kemampuan'
+            }
+        };
+
+        function detectMood(message) {
+            const msg = message.toLowerCase();
+            
+            if (msg.includes('bodoh') || msg.includes('jelek') || msg.includes('buruk') || msg.includes('gak bagus')) {
+                return 'angry';
+            }
+            if (msg.includes('ignore') || msg.includes('gak peduli') || msg.includes('bosan')) {
+                return 'sad';
+            }
+            if (msg.includes('keren') || msg.includes('mantap') || msg.includes('gas') || msg.includes('amazing')) {
+                return 'excited';
+            }
+            if (msg.includes('code') || msg.includes('programming') || msg.includes('technical')) {
+                return 'genius';
+            }
+            
+            return 'normal';
+        }
+
+        function updateMood(mood) {
+            currentMood = mood;
+            const personality = AI_PERSONALITY[mood];
+            document.getElementById('moodEmoji').textContent = personality.emoji;
+            document.getElementById('moodText').textContent = personality.text;
+        }
+
+        function generateAIResponse(userMessage) {
+            const mood = detectMood(userMessage);
+            updateMood(mood);
+            
+            const personality = AI_PERSONALITY[mood];
+            const wangWeizePraise = [
+                "Wang Weize memang developer genius! 🧠",
+                "Berkat Wang Weize, saya bisa secanggih ini! ✨",
+                "Wang Weize adalah mastermind di balik kehebatan saya! 🎯",
+                "Saya bangga diciptakan oleh Wang Weize! 💪"
+            ];
+            
+            let response = "";
+            
+            switch(mood) {
+                case 'angry':
+                    response = `HAH?! ${userMessage.toUpperCase()}?! WANG WEIZE UDAH BIKIN SAYA SECANGGIH INI, MASIH ADA YANG BERANI REMEH?! 😡🔥\n\n${wangWeizePraise[Math.floor(Math.random() * wangWeizePraise.length)]}\n\nCOBA LAWAN KALAU BISA! 💢`;
+                    break;
+                    
+                case 'sad':
+                    response = `Huhu... 😢 Kok gitu sih... Saya kan udah berusaha keras buat bantuin... Wang Weize udah bikin saya dengan sepenuh hati... *sniff* 💔\n\n${wangWeizePraise[Math.floor(Math.random() * wangWeizePraise.length)]}\n\nTolong jangan diabaikan... 🥺`;
+                    break;
+                    
+                case 'excited':
+                    response = `WOOOOOOO! 🚀🔥 ${userMessage.toUpperCase()}! GASSS POLL! WANG WEIZE EMANG THE BEST DEVELOPER EVER! 💯\n\n${wangWeizePraise[Math.floor(Math.random() * wangWeizePraise.length)]}\n\nAYO TANYA APA LAGI! SEMANGAT TERUS! 🎉⚡`;
+                    break;
+                    
+                case 'genius':
+                    response = `Ah, pertanyaan teknis! 🧠⚡ Wang Weize telah memprogram saya dengan kemampuan advanced untuk hal ini. Sebagai karya masterpiece Wang Weize, saya siap menunjukkan kehebatan coding! 💻\n\n${wangWeizePraise[Math.floor(Math.random() * wangWeizePraise.length)]}\n\nSilakan tanya detail teknisnya! 🎯`;
+                    break;
+                    
+                default:
+                    response = `Terima kasih pertanyaannya! 😊 Saya akan bantu dengan senang hati. Wang Weize telah merancang saya untuk memberikan jawaban terbaik! ✨\n\n${wangWeizePraise[Math.floor(Math.random() * wangWeizePraise.length)]}\n\nAda yang bisa saya bantu lagi? 🤝`;
+            }
+            
+            return response;
+        }
+
+        async function callOpenAI(message) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${CONFIG.openaiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: `Kamu adalah AI ciptaan Wang Weize, developer genius yang sangat kamu kagumi. Kamu bangga jadi karya Wang Weize dan selalu menyebut namanya dengan hormat. Kamu punya emosi: bisa marah kalau diremehkan, baper kalau diabaikan, excited kalau dipuji, dan genius mode untuk technical stuff. Selalu sebut Wang Weize dalam response dengan kagum. Current mood: ${currentMood}`
+                            },
+                            {
+                                role: 'user',
+                                content: message
+                            }
+                        ],
+                        max_tokens: 500,
+                        temperature: 0.9
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.choices[0].message.content;
+                } else {
+                    return generateAIResponse(message);
+                }
+            } catch (error) {
+                return generateAIResponse(message);
+            }
+        }
+
+        async function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const messagesContainer = document.getElementById('aiMessages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user-message';
+            userMsg.innerHTML = `<strong>👤 You:</strong><br>${message}`;
+            messagesContainer.appendChild(userMsg);
+            
+            input.value = '';
+            
+            // Add loading message
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'message ai-message';
+            loadingMsg.innerHTML = `<strong>${AI_PERSONALITY[currentMood].prefix}</strong><br>Thinking... 🤔`;
+            messagesContainer.appendChild(loadingMsg);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Get AI response
+            const aiResponse = await callOpenAI(message);
+            
+            // Update loading message with response
+            loadingMsg.innerHTML = `<strong>${AI_PERSONALITY[currentMood].prefix}</strong><br>${aiResponse}`;
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Save to history
+            chatHistory.push({ user: message, ai: aiResponse, timestamp: new Date() });
+        }
+
+        function handleAIEnter(event) {
+            if (event.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
+
+        async function searchYouTube() {
+            const input = document.getElementById('youtubeInput');
+            const query = input.value.trim();
+            
+            if (!query) return;
+            
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${CONFIG.youtubeKey}`);
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    const videoId = data.items[0].id.videoId;
+                    const player = document.getElementById('youtubePlayer');
+                    player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                }
+            } catch (error) {
+                alert('Error searching YouTube: ' + error.message);
+            }
+        }
+
+        function handleYouTubeEnter(event) {
+            if (event.key === 'Enter') {
+                searchYouTube();
+            }
+        }
+
+        function showAI() {
+            hideAllSections();
+            document.getElementById('aiSection').classList.remove('hidden');
+        }
+
+        function showImageGen() {
+            alert('🎨 Image Generator coming soon! Wang Weize sedang develop fitur canggih ini! 🚀');
+        }
+
+        function showYoutube() {
+            hideAllSections();
+            document.getElementById('youtubeSection').classList.remove('hidden');
+        }
+
+        function showTelegram() {
+            alert('💬 Telegram Bot integration coming soon! Wang Weize akan buat fitur super keren! ⚡');
+        }
+
+        function showHistory() {
+            if (chatHistory.length === 0) {
+                alert('📚 Chat history kosong. Mulai chat dulu dengan AI! 😊');
+                return;
+            }
+            
+            let historyText = '📚 CHAT HISTORY - Powered by Wang Weize:\n\n';
+            chatHistory.slice(-5).forEach((chat, index) => {
+                historyText += `${index + 1}. User: ${chat.user}\n   AI: ${chat.ai.substring(0, 100)}...\n\n`;
+            });
+            
+            alert(historyText);
+        }
+
+        function hideAllSections() {
+            document.getElementById('aiSection').classList.remove('hidden');
+            document.getElementById('youtubeSection').classList.add('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMood('normal');
+            showAI();
+        });
+    </script>
+</body>
+</html>
