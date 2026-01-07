@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 WANGWEIZEV3 - Ultimate AI Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-100px, 100vh) rotate(0deg); }
+            100% { transform: translate(100vw, -200px) rotate(360deg); }
+        }
+        
+        /* Header */
+        .header {
+            padding: 2rem 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(118, 75, 162, 0.8)); }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+        
+        .creator {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            height: calc(100vh - 200px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 220px;
+        }
+        
+        .feature-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .feature-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: transparent;
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-panel {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+        
+        .feature-panel.active {
+            display: flex;
+        }
+        
+        /* Chat Interface */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: 500px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            min-height: 300px;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 16px;
+            max-width: 80%;
+            animation: slideInMessage 0.3s ease-out;
+        }
+        
+        @keyframes slideInMessage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .message.ai {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .message-header {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .message-content {
+            line-height: 1.6;
+        }
+        
+        /* Input Section */
+        .input-section {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        
+        .input-group {
+            flex: 1;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            color: white;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 60px;
+            max-height: 120px;
+            font-family: inherit;
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .send-btn {
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            height: 60px;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Feature Specific Styles */
+        .feature-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        
+        .youtube-player {
+            width: 100%;
+            height: 315px;
+            border-radius: 16px;
+            border: none;
+            margin-bottom: 1rem;
+        }
+        
+        .image-result {
+            max-width: 100%;
+            border-radius: 16px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: loadingDot 1.4s ease-in-out infinite both;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes loadingDot {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+            
+            .feature-btn {
+                margin-bottom: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Success/Error Messages */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideInToast 0.3s ease-out;
+        }
+        
+        .toast.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+        
+        .toast.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+        
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">🚀 WANGWEIZEV3</div>
+        <div class="subtitle">Ultimate AI Dashboard - The Future is Here</div>
+        <div class="creator">✨ Created by Wang Weize - Visionary Developer</div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <button class="feature-btn active" onclick="showFeature('chat')">
+                <i class="fas fa-robot"></i>
+                AI Assistant
+            </button>
+            <button class="feature-btn" onclick="showFeature('image')">
+                <i class="fas fa-image"></i>
+                AI Image Generator
+            </button>
+            <button class="feature-btn" onclick="showFeature('youtube')">
+                <i class="fab fa-youtube"></i>
+                YouTube Player
+            </button>
+            <button class="feature-btn" onclick="showFeature('telegram')">
+                <i class="fab fa-telegram"></i>
+                Telegram Bot
+            </button>
+            <button class="feature-btn" onclick="showFeature('history')">
+                <i class="fas fa-history"></i>
+                Chat History
+            </button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            
+            <!-- AI Chat Panel -->
+            <div id="chat-panel" class="feature-panel active">
+                <div class="feature-header">🤖 AI Assistant - Powered by Wang Weize</div>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message ai">
+                            <div class="message-header">🤖 WangWeizeV3 AI</div>
+                            <div class="message-content">
+                                Halo! Saya adalah AI assistant canggih yang diciptakan oleh Wang Weize, developer genius di balik WangWeizeV3. Saya siap membantu Anda dengan berbagai pertanyaan dan tugas. Wang Weize telah merancang saya dengan kemampuan terdepan untuk memberikan pengalaman AI terbaik! 
+                                <br><br>
+                                Apa yang bisa saya bantu hari ini? 🚀
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-section">
+                        <div class="input-group">
+                            <textarea id="chat-input" class="input-field" placeholder="Tanya apa saja kepada AI..." onkeydown="checkEnter(event)"></textarea>
+                        </div>
+                        <button id="send-btn" class="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Generator Panel -->
+            <div id="image-panel" class="feature-panel">
+                <div class="feature-header">🎨 AI Image Generator</div>
+                <div class="input-section">
+                    <div class="input-group">
+                        <textarea id="image-prompt" class="input-field" placeholder="Describe the image you want to generate..."></textarea>
+                    </div>
+                    <button class="send-btn" onclick="generateImage()">
+                        <i class="fas fa-magic"></i>
+                    </button>
+                </div>
+                <div id="image-result"></div>
+            </div>
+            
+            <!-- YouTube Panel -->
+            <div id="youtube-panel" class="feature-panel">
+                <div class="feature-header">📺 YouTube Player</div>
+                <div class="input-section">
+                    <div class="input-group">
+                        <input type="text" id="youtube-search" class="input-field" placeholder="Search for videos..." onkeydown="checkEnterYouTube(event)">
+                    </div>
+                    <button class="send-btn" onclick="searchYouTube()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div id="youtube-result"></div>
+            </div>
+            
+            <!-- Telegram Panel -->
+            <div id="telegram-panel" class="feature-panel">
+                <div class="feature-header">📱 Telegram Integration</div>
+                <div class="input-section">
+                    <div class="input-group">
+                        <textarea id="telegram-message" class="input-field" placeholder="Message to send via Telegram..."></textarea>
+                    </div>
+                    <button class="send-btn" onclick="sendTelegram()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div id="telegram-result"></div>
+            </div>
+            
+            <!-- History Panel -->
+            <div id="history-panel" class="feature-panel">
+                <div class="feature-header">📜 Chat History</div>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <button class="send-btn" style="flex: 1;" onclick="loadChatHistory()">
+                        <i class="fas fa-refresh"></i> Load History
+                    </button>
+                    <button class="send-btn" style="flex: 1; background: linear-gradient(135deg, #f44336, #d32f2f);" onclick="clearChatHistory()">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                </div>
+                <div id="history-content" class="chat-messages" style="max-height: 400px;"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Feature Management
+        function showFeature(feature) {
+            // Hide all panels
+            document.querySelectorAll('.feature-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.feature-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected panel
+            document.getElementById(feature + '-panel').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Toast Messages
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // AI Chat Functions
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            const sendBtn = document.getElementById('send-btn');
+            
+            if (!input.value.trim()) return;
+            
+            const userMessage = input.value.trim();
+            input.value = '';
+            
+            // Add user message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerHTML = `
+                <div class="message-header">👤 You</div>
+                <div class="message-content">${userMessage}</div>
+            `;
+            messages.appendChild(userDiv);
+            
+            // Show loading
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message ai';
+            loadingDiv.innerHTML = `
+                <div class="message-header">🤖 WangWeizeV3 AI</div>
+                <div class="message-content loading">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                    Wang Weize's AI is thinking...
+                </div>
+            `;
+            messages.appendChild(loadingDiv);
+            messages.scrollTop = messages.scrollHeight;
+            
+            sendBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/ai-chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                
+                const data = await response.json();
+                
+                loadingDiv.remove();
+                
+                if (data.success) {
+                    const aiDiv = document.createElement('div');
+                    aiDiv.className = 'message ai';
+                    aiDiv.innerHTML = `
+                        <div class="message-header">🤖 WangWeizeV3 AI</div>
+                        <div class="message-content">${data.response}</div>
+                    `;
+                    messages.appendChild(aiDiv);
+                } else {
+                    showToast(data.error, 'error');
+                }
+                
+            } catch (error) {
+                loadingDiv.remove();
+                showToast('Connection error. Wang Weize will fix this soon!', 'error');
+            }
+            
+            messages.scrollTop = messages.scrollHeight;
+            sendBtn.disabled = false;
+        }
+        
+        function checkEnter(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+        
+        // Image Generation
+        async function generateImage() {
+            const prompt = document.getElementById('image-prompt');
+            const result = document.getElementById('image-result');
+            
+            if (!prompt.value.trim()) return;
+            
+            result.innerHTML = `
+                <div class="loading">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                    Wang Weize's AI is generating your image...
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/generate-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt.value })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <img src="${data.image_url}" alt="Generated Image" class="image-result">
+                        <p style="margin-top: 1rem; color: rgba(255,255,255,0.7);">
+                            <strong>Prompt:</strong> ${data.prompt}
+                        </p>
+                    `;
+                    showToast('Image generated successfully!');
+                } else {
+                    result.innerHTML = `<p style="color: #f44336;">Error: ${data.error}</p>`;
+                }
+                
+                prompt.value = '';
+                
+            } catch (error) {
+                result.innerHTML = `<p style="color: #f44336;">Connection error</p>`;
+            }
+        }
+        
+        // YouTube Search
+        async function searchYouTube() {
+            const search = document.getElementById('youtube-search');
+            const result = document.getElementById('youtube-result');
+            
+            if (!search.value.trim()) return;
+            
+            result.innerHTML = `
+                <div class="loading">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                    Searching YouTube...
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/youtube-search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: search.value })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <iframe class="youtube-player" 
+                                src="https://www.youtube.com/embed/${data.video_id}" 
+                                allowfullscreen>
+                        </iframe>
+                        <h3 style="margin-top: 1rem;">${data.title}</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Channel: ${data.channel}</p>
+                    `;
+                    showToast('Video loaded successfully!');
+                } else {
+                    result.innerHTML = `<p style="color: #f44336;">Error: ${data.error}</p>`;
+                }
+                
+                search.value = '';
+                
+            } catch (error) {
+                result.innerHTML = `<p style="color: #f44336;">Search error</p>`;
+            }
+        }
+        
+        function checkEnterYouTube(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchYouTube();
+            }
+        }
+        
+        // Telegram Integration
+        async function sendTelegram() {
+            const message = document.getElementById('telegram-message');
+            const result = document.getElementById('telegram-result');
+            
+            if (!message.value.trim()) return;
+            
+            result.innerHTML = `
+                <div class="loading">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                    Sending to Telegram...
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/send-telegram', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message.value })
+                });
+                
+                const data = await response.json();
+                result.innerHTML = `<p style="color: #4CAF50;">✅ ${data.message}</p>`;
+                message.value = '';
+                showToast('Message processed!');
+                
+            } catch (error) {
+                result.innerHTML = `<p style="color: #f44336;">Connection error</p>`;
+            }
+        }
+        
+        // Chat History
+        async function loadChatHistory() {
+            const content = document.getElementById('history-content');
+            
+            content.innerHTML = `
+                <div class="loading">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                    Loading chat history...
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/get-chat-history');
+                const data = await response.json();
+                
+                if (data.success && data.chats.length > 0) {
+                    content.innerHTML = '';
+                    data.chats.forEach(chat => {
+                        const chatDiv = document.createElement('div');
+                        chatDiv.innerHTML = `
+                            <div class="message user">
+                                <div class="message-header">👤 You - ${new Date(chat.timestamp).toLocaleString()}</div>
+                                <div class="message-content">${chat.user_message}</div>
+                            </div>
+                            <div class="message ai">
+                                <div class="message-header">🤖 ${chat.model || 'WangWeizeV3 AI'}</div>
+                                <div class="message-content">${chat.ai_response}</div>
+                            </div>
+                        `;
+                        content.appendChild(chatDiv);
+                    });
+                } else {
+                    content.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5);">No chat history found</p>';
+                }
+                
+            } catch (error) {
+                content.innerHTML = '<p style="color: #f44336;">Error loading history</p>';
+            }
+        }
+        
+        async function clearChatHistory() {
+            if (confirm('Are you sure you want to clear all chat history?')) {
+                try {
+                    await fetch('/clear-chat-history', { method: 'POST' });
+                    document.getElementById('history-content').innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5);">Chat history cleared</p>';
+                    showToast('Chat history cleared!');
+                } catch (error) {
+                    showToast('Error clearing history', 'error');
+                }
+            }
+        }
+        
+        // Auto-resize textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
+        
+        // Welcome message
+        setTimeout(() => {
+            showToast('Welcome to WangWeizeV3! The ultimate AI dashboard created by Wang Weize 🚀');
+        }, 1000);
+    </script>
+</body>
+</html>

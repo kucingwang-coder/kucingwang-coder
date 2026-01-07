@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wang Weize V4 - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🚀 Wang Weize V4</h1>
+                <p>Ultimate AI Dashboard</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    🔐 LOGIN
+                </button>
+            </form>
+            
+            <div id="error-message" class="error hidden"></div>
+            
+            <div class="login-footer">
+                <p>Created by: Wang Weize 🔥</p>
+                <p>The Future of AI is Here!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    document.getElementById('error-message').textContent = result.message;
+                    document.getElementById('error-message').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚀 Wang Server</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0;
+            padding: 20px; 
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d); 
+            color: white; 
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 450px; 
+            margin: 0 auto; 
+            background: rgba(40, 40, 40, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h2 { 
+            text-align: center; 
+            color: #4CAF50; 
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .section { 
+            margin: 25px 0; 
+            padding: 20px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 10px;
+        }
+        h3 { 
+            color: #81C784; 
+            margin-bottom: 15px; 
+            font-size: 18px;
+        }
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 8px 0; 
+            border-radius: 8px; 
+            border: 2px solid #555; 
+            font-size: 16px;
+            background: #333;
+            color: white;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0;
+            border-radius: 8px; 
+            border: none; 
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white; 
+            cursor: pointer; 
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result { 
+            background: #222; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 8px; 
+            font-family: 'Courier New', monospace; 
+            white-space: pre-wrap; 
+            border: 1px solid #444;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 WANG SERVER</h2>
+        
+        <div class="section">
+            <h3>📝 Register Akun Baru</h3>
+            <input type="email" id="regEmail" placeholder="📧 Email Address" required>
+            <input type="text" id="regName" placeholder="👤 Nama Lengkap" required>
+            <input type="password" id="regPass" placeholder="🔒 Password" required>
+            <button onclick="register()">✅ DAFTAR SEKARANG</button>
+        </div>
+        
+        <div class="section">
+            <h3>🔑 Login ke Akun</h3>
+            <input type="email" id="loginEmail" placeholder="📧 Email Address">
+            <input type="password" id="loginPass" placeholder="🔒 Password">
+            <button onclick="login()">🚀 MASUK SEKARANG</button>
+        </div>
+        
+        <div id="result" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        function showResult(data) {
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            if (data.error) {
+                result.style.borderColor = '#f44336';
+                result.style.color = '#ffcdd2';
+            } else {
+                result.style.borderColor = '#4CAF50';
+                result.style.color = '#c8e6c9';
+            }
+            result.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function register() {
+            const email = document.getElementById('regEmail').value;
+            const name = document.getElementById('regName').value;
+            const password = document.getElementById('regPass').value;
+
+            if (!email || !name || !password) {
+                alert('❌ Isi semua field!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, name, password})
+                });
+                
+                const result = await response.json();
+                showResult(result);
+                
+                if (response.ok) {
+                    document.getElementById('regEmail').value = '';
+                    document.getElementById('regName').value = '';
+                    document.getElementById('regPass').value = '';
+                    alert('✅ Registrasi berhasil! Silakan login.');
+                }
+            } catch (error) {
+                showResult({error: 'Connection failed: ' + error.message});
+            }
+        }
+        
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPass').value;
+
+            if (!email || !password) {
+                alert('❌ Isi email dan password!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                });
+                
+                const result = await response.json();
+                showResult(result);
+                
+                if (response.ok) {
+                    alert('🎉 Login berhasil! Halo ' + result.user);
+                }
+            } catch (error) {
+                showResult({error: 'Connection failed: ' + error.message});
+            }
+        }
+    </script>
+</body>
+</html>
