@@ -1,51 +1,17 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 WangWeize V5 - AI Revolution | Ultimate Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="app">
-        <!-- Enhanced Header -->
-        <header class="header-enhanced">
-            <div class="header-bg"></div>
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <div class="brand-info">
-                        <h1 class="brand-title">WANGWEIZE V5</h1>
-                        <span class="brand-subtitle">AI REVOLUTION</span>
-                    </div>
-                </div>
-                
-                <div class="header-center">
-                    <h2 class="main-title">Ultimate AI Dashboard - The Future is Here</h2>
-                    <p class="creator-credit">
-                        ⚡ Created by <strong>Wang Weize</strong> - Visionary AI Architect ⚡
-                    </p>
-                </div>
-                
-                <div class="header-controls">
-                    <button class="control-btn" id="themeToggle" title="Toggle Theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <button class="control-btn" id="layoutToggle" title="Desktop/Mobile">
-                        <i class="fas fa-desktop"></i>
-                    </button>
-                    <div class="status-indicator">
-                        <span class="status-dot"></span>
-                        <span class="status-text">Online</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
             opacity: 0.9;
             font-size: 1.1rem;
         }
@@ -1116,8 +1082,5 @@ nano index.html
             showAI();
         });
     </script>
-</body>
-</html>
-</div>
 </body>
 </html>
